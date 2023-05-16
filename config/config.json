@@ -1,0 +1,22 @@
+{
+    "language": "de",
+    "elements": [
+      {
+        "type": "input_text",
+        "label": "Fahrzeugidentnummer",
+        "key": "fin",
+        "position": [50, 50],
+        "size": [300, 30],
+        "validation_function": "check_fin_valid",
+        "validation_error_message": "Die Fahrzeugidentnummer ist ungültig."
+      },
+      {
+        "type": "button",
+        "label": "Speichern",
+        "position": [50, 100],
+        "size": [300, 50],
+        "click_function": "save_data"
+      }
+    ]
+  }
+  

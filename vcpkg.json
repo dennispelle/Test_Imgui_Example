@@ -8,6 +8,7 @@
 		},
 		"glfw3",
 		"glad",
-        "implot"
+        "implot",
+		"nlohmann-json"
 	]
 }

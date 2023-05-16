@@ -1,0 +1,5 @@
+{   
+    "input_text_fin_label": "Fahrzeugidentnummer",
+    "input_text_fin_fail": "Die eingegebene Fahrzeugidentnummer ist ungültig",
+    "button_save_label": "Speichern"
+  }
