@@ -5,7 +5,7 @@
 #include <iostream>
 
 auto load_lang_string(const std::string& lang_key) {
-    std::ifstream lang_file("config/de.json");
+    std::ifstream lang_file("../../config/de.json");
     nlohmann::json lang_settings;
     lang_file >> lang_settings;
     std::string returnstring = lang_settings[lang_key].get<std::string>();
@@ -16,7 +16,7 @@ auto load_lang_string(const std::string& lang_key) {
 struct label{
     std::string input_text_fin_label = load_lang_string("input_text_fin_label");
     std::string input_text_fin_fail = load_lang_string("input_text_fin_fail");
-    std::string input_text_fin_success = load_lang_string("input_text_fin_success");
+    std::string input_text_fin_complete = load_lang_string("input_text_fin_complete");
 };
 
 
@@ -27,12 +27,12 @@ bool check_fin_valid (T fin_to_check)
     
     if (strlen(fin_to_check)!=17)
     {
-        return true;
+        return false;
    
     }  
     else 
     {
-        return false;
+        return true;
     }
 }
 
@@ -56,9 +56,9 @@ int main() {
         
 
         if(check_fin_valid(fahrzeugidentnummer)){
-            ImGui::Text(mylabel.input_text_fin_fail.c_str());
+            ImGui::Text(mylabel.input_text_fin_complete.c_str());
         } else {
-            ImGui::Text(mylabel.input_text_fin_success.c_str());
+            ImGui::Text(mylabel.input_text_fin_fail.c_str());
         }
         
 
