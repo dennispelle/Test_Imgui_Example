@@ -68,7 +68,7 @@ void save_data(const std::string& fin) {
 
 int main() {
     label mylabel;
-
+    bool showOptionsWindow = true;   
     //std::string input_text_fin_label = {load_lang_string("input_text_fin_label")};
 
     auto render = [&]() {
@@ -77,6 +77,20 @@ int main() {
         ImGui::Begin("foobar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize);
         ImGui::SetWindowFontScale(3);
         
+        if (ImGui::BeginMenu("Menu")) {
+            // Optionen hinzufügen
+            if (ImGui::MenuItem("Optionen")) {
+                showOptionsWindow = true;
+            }
+            if (ImGui::MenuItem("nope")) {
+                // Aktion für Option 2
+            }
+            if (ImGui::MenuItem("no overtime")) {
+                // Aktion für Option 3
+            }
+            
+            ImGui::EndMenu();
+        }
         
         static char fahrzeugidentnummer[18]="";
         
@@ -90,10 +104,27 @@ int main() {
                 
         ImGui::Button(mylabel.button_save_label.c_str(), ImVec2(load_config<int>("button","sizex"), load_config<int>("button","sizey")));
 
+
+        
+
         ImGui::End();
+
+        if (showOptionsWindow) {
+            ImGui::Begin("Options", nullptr, ImGuiWindowFlags_NoSavedSettings);
+            ImGui::SetWindowFontScale(3);
+            // Hier kannst du die Optionen für das Optionsfenster hinzufügen
+            // ...
+
+            ImGui::End();
+        }
+        
+
     };
-    ImGuiInstance window{load_config<size_t>("window","sizex"), load_config<size_t>("window","sizex"), "Test"};
+   
+    ImGuiInstance window{load_config<size_t>("window","sizex"), load_config<size_t>("window","sizey"), "Test"};
+
     while(window.run(render)) {
+        
     }
     return 0;
 }
