@@ -1,6 +1,23 @@
-{   
-    "input_text_fin_label": "Vehicle Identification Number",
-    "input_text_fin_fail": "Vin is invalid",
-    "input_text_fin_complete": "Vin is Valid",
-    "button_save_label": "Save"
-  }
+{
+  "inputfin":
+    {
+    "label":"Vehicle Identification Number",
+    "fail":"The entered Vehicle Identification Number is invalid",
+    "complete": "Vehicle Identification Number complete"
+    },
+
+  "button":
+    {
+    "save":
+    {
+    "label":"Save"
+    }
+    },
+
+  "menu":
+    {
+    "label":"Menu",
+    "option":"Options",
+    "language":"Languages"
+    }
+}

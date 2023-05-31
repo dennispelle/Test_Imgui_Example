@@ -1,15 +1,11 @@
 {
-  "language": "de",
-  "button" : 
-  {
-    "sizex" : 600,
-    "sizey" : 600
-  }, 
-  
-  "window":
-  {
-    "sizex" : 1920,
-    "sizey" : 800
-  }
+    "button": {
+        "sizex": 600,
+        "sizey": 600
+    },
+    "language": "de",
+    "window": {
+        "sizex": 1920,
+        "sizey": 800
+    }
 }
-  

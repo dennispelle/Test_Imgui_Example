@@ -1,6 +1,21 @@
 {   
-    "input_text_fin_label": "Fahrzeugidentnummer",
-    "input_text_fin_fail": "Die eingegebene Fahrzeugidentnummer ist ungültig",
-    "input_text_fin_complete": "Fahrzeugidentnummer vollständig",
-    "button_save_label": "Speichern"
-  }
+  "inputfin":
+    {
+    "label":"Fahrzeugidentnummer",
+    "fail":"Die eingegebene Fahrzeugidentnummer ist ungültig",
+    "complete": "Fahrzeugidentnummer vollständig"
+    },
+
+  "button":
+  {
+    "save":
+    {
+      "label":"speichern"
+    }
+  },
+  "menu":{
+    "label":"Menü",
+    "option":"Optionen",
+    "language":"Sprachen"
+  } 
+}
