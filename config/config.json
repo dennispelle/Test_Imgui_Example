@@ -1,9 +1,27 @@
 {
     "button": {
-        "sizex": 600,
-        "sizey": 600
+        "active": {
+            "blue": 0.9,
+            "green": 0.6,
+            "red": 0.0,
+            "transparency": 1.0
+        },
+        "hover": {
+            "blue": 0.8,
+            "green": 0.1,
+            "red": 0.1,
+            "transparency": 1.0
+        },
+        "normal": {
+            "blue": 0.6,
+            "green": 0.0,
+            "red": 0.9,
+            "transparency": 1.0
+        },
+        "sizex": 200,
+        "sizey": 100
     },
-    "language": "de",
+    "language": "Deutsch",
     "window": {
         "sizex": 1920,
         "sizey": 800

@@ -11,8 +11,18 @@
     "save":
     {
       "label":"speichern"
+    },
+    "send":
+    {
+      "label":"senden"
+    },
+    "measure":
+    {
+      "label":"messen"
     }
   },
+ 
+
   "menu":{
     "label":"Menü",
     "option":"Optionen",

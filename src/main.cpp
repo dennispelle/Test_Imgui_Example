@@ -20,22 +20,20 @@ void write_json_file(const std::string path, const nlohmann::json& json_data) {
     json_file << json_data.dump(4);
     json_file.close();
 }
+
 template<typename T>
-T load_json(nlohmann::json configjson, std::string key){
+T load_json(nlohmann::json const& configjson, std::string const& key){
     return configjson[key].get<T>();
 }
-template<typename T>
-T load_json(nlohmann::json configjson, std::string key1, std::string key2){
-    return configjson[key1][key2].get<T>();
+
+template<typename T, typename... Args>
+T load_json(nlohmann::json const& config, std::string const& key, Args... keylist){
+    nlohmann::json unpackme = config[key];
+    T returnme = load_json<T>(unpackme,keylist...);
+    return returnme;
 }
-template<typename T>
-T load_json(nlohmann::json configjson, std::string key1, std::string key2, std::string key3){
-    return configjson[key1][key2][key3].get<T>();
-}
-template<typename T>
-T load_json(nlohmann::json configjson, std::string key1, std::string key2, std::string key3,std::string key4){
-    return configjson[key1][key2][key3][key4].get<T>();
-}
+
+
 
 std::vector<std::string> getAvailableLanguages(const std::string& languageFolder) {
     std::vector<std::string> languages;
@@ -76,8 +74,9 @@ void save_data(const std::string& fin) {
 }
 
 int main() {
+    std::vector<std::string> availableLanguages = getAvailableLanguages("../../languages");
     nlohmann::json config = load_json_file("../../config/config.json");
-    nlohmann::json language = load_json_file("../../config/" + load_json<std::string>(config,"language") + ".json");
+    nlohmann::json language = load_json_file("../../languages/" + load_json<std::string>(config,"language") + ".json");
     
     auto render = [&]() {
 
@@ -86,18 +85,22 @@ int main() {
         ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
         ImGui::Begin("foobar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize);
         ImGui::SetWindowFontScale(3);
+    
+
+        //ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.6f, 0.9f, 1.0f)); // Ändere die Hintergrundfarbe des Buttons bei Hover
+        //ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.2f, 0.3f, 1.0f)); // Ändere die Hintergrundfarbe des Buttons bei Aktivierung
+    
+
         
         if (ImGui::BeginMenu(load_json<std::string>(language,"menu","label").c_str())) {
             // Optionen hinzufügen
             if (ImGui::BeginMenu(load_json<std::string>(language,"menu","option").c_str())) {
                 ImGui::SetWindowFontScale(3);
-                if (ImGui::MenuItem("Deutsch")) {
-                    config["language"]="de";
-                    write_json_file("../../config/config.json",config);
-                }
-                if (ImGui::MenuItem("Englisch")) {
-                    config["language"]="en";
-                    write_json_file("../../config/config.json",config);
+                for (const auto& lang : availableLanguages) {
+                    if (ImGui::MenuItem(lang.c_str())) {
+                        config["language"] = lang;
+                        write_json_file("../../config/config.json", config);
+                    }
                 }
                 
                 ImGui::EndMenu();    
@@ -122,16 +125,33 @@ int main() {
         } else {
             ImGui::Text(load_json<std::string>(language,"inputfin","complete").c_str());
         }
-             
-        ImGui::Button(load_json<std::string>(language,"button","save","label").c_str(), ImVec2(load_json<int>(config,"button","sizex"), load_json<int>(config,"button","sizey")));
 
-        
-        
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.4f, 0.4f, 0.6f, 1.0f)); // Ändere die Hintergrundfarbe des Buttons
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.6f, 0.9f, 1.0f)); // Ändere die Hintergrundfarbe des Buttons bei Hover
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.2f, 0.3f, 1.0f)); // Ändere die Hintergrundfarbe des Buttons bei Aktivierung
+     
+       
 
+        if(ImGui::Button(load_json<std::string>(language,"button","measure","label").c_str(), ImVec2(load_json<int>(config,"button","sizex"), load_json<int>(config,"button","sizey"))))
+        {
+
+        };
+        ImGui::SameLine();
+        if(ImGui::Button(load_json<std::string>(language,"button","send","label").c_str(), ImVec2(load_json<int>(config,"button","sizex"), load_json<int>(config,"button","sizey"))))
+        {
+
+        };
+        ImGui::SameLine();
+        if(ImGui::Button(load_json<std::string>(language,"button","save","label").c_str(), ImVec2(load_json<int>(config,"button","sizex"), load_json<int>(config,"button","sizey"))))
+        {
+
+        };
+        ImGui::PopStyleColor(3);
+        
         ImGui::End();
     };
    
-    ImGuiInstance window{1920,1080, "Test"};
+    ImGuiInstance window{load_json<size_t>(config,"window","sizex"),load_json<size_t>(config,"window","sizey"), "Test"};
 
     while(window.run(render)) {
         
