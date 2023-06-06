@@ -29,9 +29,6 @@ T load_json(const nlohmann::json& configjson, const std::string& key) {
     if (configjson.contains(key)) {
         return configjson[key].get<T>();
     }
-    else if (std::is_same_v<T, std::string>) {
-        return T(" ");
-    }
     else {
         return T();
     }
@@ -62,9 +59,7 @@ std::vector<std::string> getAvailableLanguages( std::string const& languageFolde
 
 template <typename T>
 bool check_fin_valid(T fin_to_check) {
-    const char* fin_str = reinterpret_cast<const char*>(fin_to_check);
-    
-    if (strlen(fin_str) != 17) {
+    if (strlen(fin_to_check) != 17) {
         return false;
     } else {
         return true;
