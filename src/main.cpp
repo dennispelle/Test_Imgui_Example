@@ -4,38 +4,48 @@
 #include <fstream>
 #include <iostream>
 #include <filesystem>
+#include <type_traits>
+
+const std::string configpath = "../../config/config.json";
 
 
 
-
-
-nlohmann::json load_json_file(const std::string path){
+nlohmann::json load_json_file( std::string const& path){
     std::ifstream json_file(path);
     nlohmann::json return_json;
     json_file>>return_json;
     return return_json; 
 }
-void write_json_file(const std::string path, const nlohmann::json& json_data) {
+
+void write_json_file( std::string const& path,  nlohmann::json const& json_data) {
     std::ofstream json_file(path);
     json_file << json_data.dump(4);
     json_file.close();
 }
 
+
 template<typename T>
-T load_json(nlohmann::json const& configjson, std::string const& key){
-    return configjson[key].get<T>();
+T load_json(const nlohmann::json& configjson, const std::string& key) {
+    if (configjson.contains(key)) {
+        return configjson[key].get<T>();
+    }
+    else if (std::is_same_v<T, std::string>) {
+        return T(" ");
+    }
+    else {
+        return T();
+    }
 }
 
 template<typename T, typename... Args>
-T load_json(nlohmann::json const& config, std::string const& key, Args... keylist){
+T load_json(const nlohmann::json& config, const std::string& key, Args... keylist) {
     nlohmann::json unpackme = config[key];
-    T returnme = load_json<T>(unpackme,keylist...);
+    T returnme = load_json<T>(unpackme, keylist...);
     return returnme;
 }
 
 
-
-std::vector<std::string> getAvailableLanguages(const std::string& languageFolder) {
+std::vector<std::string> getAvailableLanguages( std::string const& languageFolder) {
     std::vector<std::string> languages;
     for (const auto& entry : std::filesystem::directory_iterator(languageFolder)) {
         if (entry.is_regular_file()) {
@@ -51,17 +61,16 @@ std::vector<std::string> getAvailableLanguages(const std::string& languageFolder
 
 
 template <typename T>
-bool check_fin_valid (T fin_to_check)
-{    
-    if (strlen(fin_to_check)!=17)
-    {
+bool check_fin_valid(T fin_to_check) {
+    const char* fin_str = reinterpret_cast<const char*>(fin_to_check);
+    
+    if (strlen(fin_str) != 17) {
         return false;
-    }  
-    else 
-    {
+    } else {
         return true;
     }
 }
+
 
 void save_data(const std::string& fin) {
     nlohmann::json data;
@@ -74,9 +83,12 @@ void save_data(const std::string& fin) {
 }
 
 int main() {
-    std::vector<std::string> availableLanguages = getAvailableLanguages("../../languages");
-    nlohmann::json config = load_json_file("../../config/config.json");
-    nlohmann::json language = load_json_file("../../languages/" + load_json<std::string>(config,"language") + ".json");
+
+    nlohmann::json config = load_json_file(configpath);
+
+    std::vector<std::string> availableLanguages = getAvailableLanguages(load_json<std::string>(config,"languagepath"));
+    
+    nlohmann::json language = load_json_file(load_json<std::string>(config,"languagepath") + load_json<std::string>(config,"language") + ".json");
     
     auto render = [&]() {
 
@@ -94,7 +106,7 @@ int main() {
         
         if (ImGui::BeginMenu(load_json<std::string>(language,"menu","label").c_str())) {
             // Optionen hinzufügen
-            if (ImGui::BeginMenu(load_json<std::string>(language,"menu","option").c_str())) {
+            if (ImGui::BeginMenu(load_json<std::string>(language,"menu","language_option").c_str())) {
                 ImGui::SetWindowFontScale(3);
                 for (const auto& lang : availableLanguages) {
                     if (ImGui::MenuItem(lang.c_str())) {

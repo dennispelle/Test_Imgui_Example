@@ -1,4 +1,7 @@
 {
+    "language": "Deutsch",
+    "languagepath" : "../../languages/",
+
     "button": {
         "active": {
             "blue": 0.9,
@@ -21,7 +24,7 @@
         "sizex": 200,
         "sizey": 100
     },
-    "language": "Deutsch",
+    
     "window": {
         "sizex": 1920,
         "sizey": 800
