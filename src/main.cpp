@@ -30,7 +30,11 @@ T load_json(const nlohmann::json& configjson, const std::string& key) {
         return configjson[key].get<T>();
     }
     else {
-        return T();
+        if constexpr(std::is_same_v<T,std::string>) {
+            return T{key};
+        }else{
+            return T{};
+        }
     }
 }
 
@@ -38,7 +42,9 @@ template<typename T, typename... Args>
 T load_json(const nlohmann::json& config, const std::string& key, Args... keylist) {
     nlohmann::json unpackme = config[key];
     T returnme = load_json<T>(unpackme, keylist...);
+    
     return returnme;
+    
 }
 
 
