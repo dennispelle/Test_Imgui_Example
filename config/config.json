@@ -1,24 +1,25 @@
 {
+    "title":"Omniview 0.1",
     "language": "Deutsch",
     "languagepath" : "../../languages/",
 
     "button": {
         "active": {
-            "blue": 0.9,
+            "blue": 0.6,
             "green": 0.6,
-            "red": 0.0,
+            "red": 0.6,
             "transparency": 1.0
         },
         "hover": {
             "blue": 0.8,
-            "green": 0.1,
-            "red": 0.1,
+            "green": 0.8,
+            "red": 0.8,
             "transparency": 1.0
         },
         "normal": {
-            "blue": 0.6,
-            "green": 0.0,
-            "red": 0.9,
+            "blue": 0.7,
+            "green": 0.7,
+            "red": 0.7,
             "transparency": 1.0
         },
         "sizex": 200,
@@ -26,7 +27,23 @@
     },
     
     "window": {
+        "color":{
+            "red":0.7,
+            "gree":0.7,
+            "blue":0.7,
+            "transparency":1
+        }
+        ,
         "sizex": 1920,
         "sizey": 800
+    },
+    "text":{
+        "font":"comicsans",
+        "color":{
+            "red":0.1,
+            "gree":0.1,
+            "blue":0.1,
+            "transparency":1
+        }
     }
 }

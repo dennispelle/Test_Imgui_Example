@@ -139,9 +139,12 @@ int main() {
             ImGui::Text(load_json<std::string>(language,"inputfin","complete").c_str());
         }
 
-        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.4f, 0.4f, 0.6f, 1.0f)); // Ändere die Hintergrundfarbe des Buttons
-        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.6f, 0.9f, 1.0f)); // Ändere die Hintergrundfarbe des Buttons bei Hover
-        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.2f, 0.3f, 1.0f)); // Ändere die Hintergrundfarbe des Buttons bei Aktivierung
+         // Ändere die Hintergrundfarbe des Buttons
+
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(load_json<float>(config,"button","normal","red"),load_json<float>(config,"button","normal","blue"),load_json<float>(config,"button","normal","green"),load_json<float>(config,"button","normal","transparency")));
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(load_json<float>(config,"button","hover","red"),load_json<float>(config,"button","hover","blue"),load_json<float>(config,"button","hover","green"),load_json<float>(config,"button","hover","transparency")));
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(load_json<float>(config,"button","active","red"),load_json<float>(config,"button","active","blue"),load_json<float>(config,"button","active","green"),load_json<float>(config,"button","active","transparency")));
+
      
        
 
@@ -164,7 +167,7 @@ int main() {
         ImGui::End();
     };
    
-    ImGuiInstance window{load_json<size_t>(config,"window","sizex"),load_json<size_t>(config,"window","sizey"), "Test"};
+    ImGuiInstance window{load_json<size_t>(config,"window","sizex"),load_json<size_t>(config,"window","sizey"),load_json<std::string>(config,"title")};
 
     while(window.run(render)) {
         
